@@ -7,7 +7,6 @@
 #include <cmath>
 
 using namespace sf;
-
 const int W = 800;
 const int H = 800;
 
@@ -29,18 +28,18 @@ int main() {
     int sc = 20; //масштаб графика функции
 
     //черточки:
-    RectangleShape line[40];
-    for(int i = 0; i < 40; i++) {
+    RectangleShape line[80];
+    for(int i = 0; i < 80; i++) {
         line[i].setSize(Vector2f(1, 20));
         line[i].setFillColor(Color::White);
 
-        if (i < 20) {
-            if (i < 10) line[i].setPosition(x0 - (i + 1) * sc, y0 - 10);
-            else line[i].setPosition(x0 + (i - 9) * sc, y0 - 10);
+        if (i < 40) {
+            if (i < 20) line[i].setPosition(x0 - (i + 1) * sc, y0 - 10);
+            else line[i].setPosition(x0 + (i - 20) * sc, y0 - 10);
         } else {
             line[i].setRotation(90);
-            if(i < 30) line[i].setPosition(x0 + 10, y0 + (i - 30) * sc);
-            else line[i].setPosition(x0 + 10, y0 + (i - 29) * sc);
+            if(i < 60) line[i].setPosition(x0 + 10, y0 + (i - 60) * sc);
+            else line[i].setPosition(x0 + 10, y0 + (i - 59) * sc);
         }
     }
 
@@ -60,12 +59,16 @@ int main() {
         arrows[i].setFillColor(Color::White);
 
         if (i < 2) arrows[i].setPosition(x0, 0);
-        else arrows[i].setPosition(W, y0);
+        else arrows[i].setPosition(W, y0 - 1);
     }
     arrows[0].setRotation(25);
     arrows[1].setRotation(-25);
     arrows[2].setRotation(60);
     arrows[3].setRotation(-250);
+
+    Texture t;
+    t.loadFromFile("D:/Programs/CLion Projects/GRAPHI/GRAPHI.png");
+    Sprite pic(t);
 
     //int anim = 0; //анимация
 
@@ -84,16 +87,16 @@ int main() {
         window.draw(OsX);
         window.draw(OsY);
         for (int i = 0; i < 4; i++) window.draw(arrows[i]);
-        for (int i = 0; i < 40; i++) {
-            if (i != 19 && i != 20) window.draw(line[i]);
+        for (int i = 0; i < 80; i++) {
+            if (i != 19 && i != 39 && i != 40 && i!= 41) window.draw(line[i]);
         }
 
-
+        window.draw(pic);
         //строим график
         for (int i = 0; i < mass; i++) {
             float x = oLeft + (i / c); //от начала
             //y используется для функции, от которой строится график.
-            float y = pow(x, 2);
+            float y = pow(x,1.0/2);
 
             float x1 = x0 + x * sc;
             float y1 = y0 - y * sc;
